@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">FacePay</string>
+    <string name="title_activity_enroll">EnrollActivity</string>
+    <string name="alert_dialog_ok">Create Account</string>
+    <string name="alert_dialog_cancel">Try Again</string>
+    <string name="norec">Didn\'t recognize you</string>
+    <string name="noface">No face found</string>
+    <string name="tender_name">FacePay</string>
+    <string name="photo_fail">Photo was not successful</string>
+</resources>
