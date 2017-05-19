@@ -7,5 +7,10 @@
     android:gravity="center"
     tools:context="com.example.samuelkim.facepay.MainActivity">
 
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="50dp"
+    android:src="@drawable/clover"/>
 
 </LinearLayout>

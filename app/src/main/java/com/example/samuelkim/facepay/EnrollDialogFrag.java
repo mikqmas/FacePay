@@ -81,7 +81,7 @@ public class EnrollDialogFrag extends DialogFragment {
                                     mLname = lname.getText().toString();
                                     mEmail = email.getText().toString();
                                     mPhone = phone.getText().toString();
-                                    QueryUtil.checkAndCreateCustomer(mContext, mFname, mLname, mPhone, mEmail, mImageString);
+                                    QueryUtil.checkAndCreateCustomer(mContext, getFragmentManager(), mFname, mLname, mPhone, mEmail, mImageString);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }

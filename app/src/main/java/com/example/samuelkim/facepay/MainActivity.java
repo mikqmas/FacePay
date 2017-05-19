@@ -92,8 +92,6 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), TAKE_PHOTO);
     }
 
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -120,13 +118,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-    public void member(View view) {
-        startActivity(new Intent(this, MemberActivity.class));
-    }
-
-
-
 
     public void enroll() {
         // Enroll

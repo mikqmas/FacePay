@@ -38,69 +38,62 @@ import java.util.Map;
 
 public class QueryUtil extends FragmentActivity {
     private static Context mContext;
+    private static CustomerConnector mCustomerConnector;
 
     public static void getContext(Context context) {
         mContext = context;
     }
 
-//    private void connect() {
-//        if (mAccount != null) {
-//            mInventoryConnector = new InventoryConnector(MainActivity.mAccount, null);
-//            mOrderConnector = new OrderConnector(this, mAccount, null);
-//            mMerchantConnector = new MerchantConnector(this, mAccount, null);
-//            tenderConnector = new TenderConnector(this, mAccount, null);
-//            mEmployeeConnector = new EmployeeConnector(this, mAccount, null);
-//            mCustomerConnector = new CustomerConnector(this, mAccount, null);
-//            mCustomerConnector.connect();
-//            mEmployeeConnector.connect();
-//            mInventoryConnector.connect();
-//            mOrderConnector.connect();
-//            mMerchantConnector.connect();
-//            tenderConnector.connect();
-//        }
-//    }
-//
-//    private void disconnect() {
-//        if (mAccount != null) {
-//            mInventoryConnector.disconnect();
-//            mMerchantConnector.disconnect();
-//            mOrderConnector.disconnect();
-//            tenderConnector.disconnect();
-//            mEmployeeConnector.disconnect();
-//            mCustomerConnector.disconnect();
-//            mCustomerConnector = null;
-//            mEmployeeConnector = null;
-//            mInventoryConnector = null;
-//            mOrderConnector = null;
-//            mMerchantConnector = null;
-//            tenderConnector = null;
-//        }
-//    }
-
-    public static void checkAndCreateCustomer(final Context mContext, final String mFname, final String mLname, final String mPhone, final String mEmail, final String mImageString) {
+    public static void checkAndCreateCustomer(final Context mContext, final FragmentManager fm, final String mFname, final String mLname, final String mPhone, final String mEmail, final String mImageString) {
         new AsyncTask<Void, Void, Void>() {
+            List<Customer> mCustomerList;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                mCustomerConnector = new CustomerConnector(mContext, MainActivity.mAccount, null);
+                mCustomerConnector.connect();
+            }
+
             @Override
             protected Void doInBackground(Void... params) {
-                Customer mCustomer = null;
                 try{
-                    CustomerConnector mCustomerConnector = new CustomerConnector(mContext, MainActivity.mAccount, null);
-                    mCustomerConnector.connect();
-                    List<Customer> mCustomerList = mCustomerConnector.getCustomers(mLname);
+                    mCustomerList = mCustomerConnector.getCustomers(mLname);
                     if (mCustomerList.size() > 0) {
-                        Log.i("test", "same name customer");
-                        //List existing customers
+                        CustomerSelectFrag.newInstance(mCustomerList, mImageString, mFname, mLname, mPhone, mEmail).show(fm, "dialog");
                     }else {
-                        mCustomer = mCustomerConnector.createCustomer(mFname, mLname, true);
-                        mCustomerConnector.addPhoneNumber(mCustomer.getId(), mPhone);
-                        mCustomerConnector.addEmailAddress(mCustomer.getId(), mEmail);
+                        Customer mCustomer = createCustomer(mFname, mLname, mPhone, mEmail);
+                        requestUserEnroll(mCustomer.getId(), mImageString);
                     }
-                    requestUserEnroll(mCustomer.getId(), mImageString);
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
                 return null;
             }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                mCustomerConnector.disconnect();
+                mCustomerConnector = null;
+            }
         }.execute();
+    }
+
+    public static Customer createCustomer(String mFname, String mLname, String mPhone, String mEmail) {
+        Customer mCustomer = null;
+        try{
+            mCustomerConnector = new CustomerConnector(mContext, MainActivity.mAccount, null);
+            mCustomerConnector.connect();
+            mCustomer = mCustomerConnector.createCustomer(mFname, mLname, true);
+            mCustomerConnector.addPhoneNumber(mCustomer.getId(), mPhone);
+            mCustomerConnector.addEmailAddress(mCustomer.getId(), mEmail);
+            mCustomerConnector.disconnect();
+            mCustomerConnector = null;
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mCustomer;
     }
 
     // Detection

@@ -7,24 +7,36 @@
         android:id="@+id/fName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textColorHint="@android:color/darker_gray"
+        android:paddingLeft="16dp"
         android:hint="Michael"/>
 
     <EditText
         android:id="@+id/lName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textColorHint="@android:color/darker_gray"
+        android:paddingLeft="16dp"
         android:hint="Smith"/>
 
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textColorHint="@android:color/darker_gray"
+        android:paddingLeft="16dp"
         android:hint="mikesmith@email.com"/>
 
     <EditText
         android:id="@+id/phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textColorHint="@android:color/darker_gray"
+        android:paddingLeft="16dp"
         android:hint="555-555-5555"/>
 
 </LinearLayout>

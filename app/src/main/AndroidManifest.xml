@@ -39,8 +39,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".EnrollActivity" />
-        <activity android:name=".MemberActivity" />
         <activity android:name=".WelcomeActivity"></activity>
     </application>
 
